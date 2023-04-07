@@ -1,29 +1,35 @@
-# Poll-App
-SEI Mariposa Project 3 - Group 4
+<h1> &#129680; <strong>Plan<em>It</em></strong> &#129680; </h1>
 
-TEMPLATE:
+<p> At <a href=""><strong>Plan<em>It</em></strong></a>, we believe that event planning should be a collaborative effort. We understand that everyone has different preferences and opinions when it comes to planning events, which is why we prioritize communication and collaboration on our platform. Our goal is to help you plan an event that everyone will enjoy and remember for years to come. </p>
 
-# <Your Project's Title>
-A description of your game. Background info of the game is a nice touch.
+#
 
-# Screenshot
+<p>Launch Pad &#128640;</p>
+<img src="https://i.imgur.com/A4n6zld.jpg"/>
+<p>Mission Control &#127756;</p>
+<img src="https://i.imgur.com/lZE6uLK.jpg"/>
 
-<img src="url to your image on imgur">
-<img src="url to your image on imgur">
+#
 
-# Technologies Used
+<h2> Technologies Used &#128187;</h2>
 
-- JavaScript
-- HTML
-- CSS
-- CardStarter CSS Library
+#
 
-# Getting Started
+- Django
+- Python
+- PostgreSQL
+- Materialize CSS Framework 
 
-[Click to View Project Planning](your Trello url here)
-[Click to Play Connect Four!](your deployment url here)
+<h2> Getting Started &#10024; </h2>
 
-# Next Steps
+#
 
-- Future enhancement one...
-- Future enhancement two... 
+<p><a href="">Click here</a> to visit <strong>Plan<em>It</em></strong>. &#128301;</p>
+<p><a href="https://trello.com/b/76y3eFfr/project-3">Click here</a> to see our workflow and how we planned out this project. &#128197;</p> 
+
+<h2 >Next Steps &#128173;</h2>
+
+# 
+
+<p>"The stars don't look bigger, but they do look brighter." - <em> Sally Ride </em><p>
+<a href=""><strong>Plan<em>It</em></strong></a> will continue to grow in the coming months to include a personal calendar and map location capabilites. Stay tuned. 

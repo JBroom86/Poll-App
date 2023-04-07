@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Event Details</h1>
+<h1 class="myEventsTitle">Event <span class="it">Details</span></h1>
 
 <div class="row">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">{{ event.name }}</span>
-                <p>Who: {{ event.who }} </p>
-                <p>What: {{ event.what }}</p>
-                <p>When: {{ event.when }} </p>
-                <p>Where: {{ event.where }} </p>
-                <p>Why: {{event.why}} </p>
-            </div>
-           <div class="card-action">
-                <a href="{% url 'events_update' event.id %}">Edit</a>
-                <a href="{% url 'events_delete' event.id %}">Delete</a>
-            </div> 
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ event.name }}</span>
+            <p class="cardDetails">Who: {{ event.who }} </p>
+            <p class="cardDetails">What: {{ event.what }}</p>
+            <p class="cardDetails">When: {{ event.when }} </p>
+            <p class="cardDetails">Where: {{ event.where }} </p>
+            <p class="cardDetails">Why: {{event.why}} </p>
         </div>
+        <div class="card-action">
+            <a class="itLight" href="{% url 'events_update' event.id %}">Edit</a>
+            <a class="deleteBtn" href="{% url 'events_delete' event.id %}">Delete</a>
+        </div>
+    </div>
 
 </div>
 <br>
+<<<<<<< HEAD
 <h2 style="color:white;">Polls: </h2>
 <a href="{% url 'poll_form' event.id %}">Create a new poll</a>
 <form action="" method="POST">
@@ -42,7 +43,57 @@
             </div>
         </div>
         {% comment %} {% endfor %} {% endcomment %}
+=======
+<h2 class="pollsTitle">Polls: </h2>
+<a class="pollsCreate" href="{% url 'polls_create' %}">Create a new poll</a>
+<div class="row">
+    <div class="col s6">
+        <p>Add Poll</p>
+        <form action="{% url 'add_poll' event.id %}" method="POST">
+            {% csrf_token %}
+            <!-- Render the inputs -->
+            {{ poll_form.as_p }}
+            <input type="submit" class="btn" value="Add Poll">
+        </form>
+
+>>>>>>> 75c32d20af0829195217b3123fdb7c4050dd2902
     </div>
-</form>
+    <div class="col s6">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div>
+                {% for poll in event.poll_set.all %}
+
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">{{ poll.question }}</span>
+                        <p class="cardDetails">{{ poll.choice_one }}: <Span class="it"> {{ poll.choice_one_count }}
+                                votes</Span></p>
+                        <p class="cardDetails">{{ poll.choice_two }}: <Span class="it"> {{ poll.choice_two_count }}
+                                votes</Span></p>
+                        <p class="cardDetails">{{ poll.choice_three }}: <Span class="it"> {{ poll.choice_three_count }}
+                                votes</Span></p>
+                    </div>
+
+                    <div class="card-action">
+                        <a class="itLight" href="{%url 'vote' poll.id%}">Vote</a>
+                        <a class="itLight" href="{%url 'results' poll.id%}">View Results</a>
+                        <br>
+                        <br>
+                        <!-- <a href="{% url 'events_update' event.id %}">Edit</a> -->
+                        <a class="deleteBtn" href="{% url 'polls_delete' poll.id %}">Delete</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</div>
+<div class="stars">
+    <div class="stars1"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+    <div class="jupiter"></div>
+</div>
 
 {% endblock %}

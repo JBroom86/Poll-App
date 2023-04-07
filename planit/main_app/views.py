@@ -5,6 +5,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .models import Event, Group, Poll
 from .forms import PollForm
+from django.http import HttpResponse
 
 # Create your views here.
 events = []
@@ -33,10 +34,19 @@ def events_index(request):
 
 def events_detail(request, event_id):
     event = Event.objects.get(id=event_id)
+    poll_form=PollForm()
     return render(request, 'events/detail.html', {
-        'event': event
+        'event': event, 
+        'poll_form': poll_form
     })
 
+def add_poll(request, event_id):
+    form = PollForm(request.POST)
+    if form.is_valid():
+        new_poll = form.save(commit=False)
+        new_poll.event_id = event_id
+        new_poll.save()
+    return redirect('detail', event_id=event_id)
 
 class EventCreate(CreateView):
     model = Event
@@ -74,12 +84,16 @@ class GroupDetail(DetailView):
 
 class GroupCreate(CreateView):
     model = Group
-    fields = '__all__'
+    fields = ['name', 'members']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class GroupUpdate(UpdateView):
     model = Group
-    fields = '__all__'
+    fields = ['name', 'members']
 
 
 class GroupDelete(DeleteView):
@@ -136,6 +150,7 @@ def poll_form(request, event_id):
         form = PollForm()
     return render(request, 'poll_form.html', {'form': form, 'event': event})
 
+<<<<<<< HEAD
 
 # class PollCreate(CreateView):
 #     model = Poll
@@ -144,8 +159,56 @@ def poll_form(request, event_id):
 #     def form_valid(self, form):
 #         form.instance.user = self.request.user
 #         return super().form_valid(form)
+=======
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+>>>>>>> 75c32d20af0829195217b3123fdb7c4050dd2902
     
+# class PollUpdate(UpdateView):
+#     model = Poll
+#     fields = ['question', 'choice_one', 'choice_two', 'choice_three']
 
+def poll_delete(request, poll_id):
+    poll =  Poll.objects.get(id=poll_id)
+    event = poll.event
+    Poll.objects.get(id=poll_id).delete()
+    # return redirect('detail', event_id=event_id)
+    return redirect('index')
+
+def results(request, poll_id):
+    poll = Poll.objects.get(pk=poll_id)
+    context = {
+        'poll': poll
+    }
+    return render(request, 'polls/results.html', context)
+
+
+def vote(request, poll_id):
+    poll = Poll.objects.get(pk=poll_id)
+    if request.method == 'POST':
+
+        choice = request.POST['poll']
+        if choice == 'choice_one':
+            poll.choice_one_count += 1
+        elif choice == 'choice_two':
+            poll.choice_two_count += 1
+        elif choice == 'choice_three':
+            poll.choice_three_count += 1
+        else:
+            return HttpResponse(400, 'Invalid form option')
+        
+        poll.save()
+
+        return redirect('results', poll.id)
+    
+    context = {
+        'poll': poll
+    }
+
+    return render(request, 'polls/vote.html', context)
+
+<<<<<<< HEAD
      
 def poll_detail(request, pk):
     poll = get_object_or_404(Poll, pk=pk)
@@ -155,7 +218,6 @@ def poll_detail(request, pk):
 class PollUpdate(UpdateView):
     model = Poll
     fields = '__all__'
+=======
+>>>>>>> 75c32d20af0829195217b3123fdb7c4050dd2902
 
-class PollDelete(DeleteView):
-    model = Poll
-    success_url = '/events/'
