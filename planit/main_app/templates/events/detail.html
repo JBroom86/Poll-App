@@ -22,25 +22,26 @@
 </div>
 <br>
 <h2 style="color:white;">Polls: </h2>
-<a href="{% url 'polls_create' %}">Create a new poll</a>
+<a href="{% url 'poll_form' event.id %}">Create a new poll</a>
 <form action="" method="POST">
     {% csrf_token %}
     <div class="row">
-        {% for poll in event.poll_set.all %}
-            <div class="card">
-                <div class="card-content">
-             <a href="{% url 'polls_detail' poll.id %}">Poll Details</a> 
-                   <span class="card-title">{{ poll.question }}</span>
-                    <p>Option 1:  {{ poll.choice_one }} </p>
-                    <p>Option 2: {{ poll.choice_two }} </p>
-                    <p>Option 3: {{ poll.choice_three }} </p> 
-                </div>
-                {% endfor %} 
-                <div class="card-action">
-                    <a href="{% url 'events_update' event.id %}">Edit</a>
-                    <a href="{% url 'events_delete' event.id %}">Delete</a>
-                </div>  \
+        {% comment %} {% for poll in event.id %} {% endcomment %}
+        {% comment %} {% for poll in event.poll_set.all %} {% endcomment %}
+        <div class="card">
+            <div class="card-content">
+                <a href="{% url 'poll_detail' pk=poll.pk %}">Poll Details</a> 
+                <span class="card-title">{{ poll.question }}</span>
+                <p>Option 1: {{ poll.choice_one }}</p>
+                <p>Option 2: {{ poll.choice_two }}</p>
+                <p>Option 3: {{ poll.choice_three }}</p> 
             </div>
+            <div class="card-action">
+                <a href="{% url 'events_update' event.id %}">Edit</a>
+                <a href="{% url 'events_delete' event.id %}">Delete</a>
+            </div>
+        </div>
+        {% comment %} {% endfor %} {% endcomment %}
     </div>
 </form>
 

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
@@ -123,19 +123,35 @@ def signup(request):
 
 # *************** Poll Views ****************
 
-class PollCreate(CreateView):
-    model = Poll
-    fields = ['question', 'choice_one', 'choice_two', 'choice_three']
+def poll_form(request, event_id):
+    event = Event.objects.get(id=event_id)
+    if request.method == 'POST':
+        form = PollForm(request.POST)
+        if form.is_valid():
+            poll = form.save(commit=False)
+            poll.event = event
+            poll.save()
+            return redirect('events_detail', event_id=event_id)
+    else:
+        form = PollForm()
+    return render(request, 'poll_form.html', {'form': form, 'event': event})
 
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     return super().form_valid(form)
+
+# class PollCreate(CreateView):
+#     model = Poll
+#     fields = ['question', 'choice_one', 'choice_two', 'choice_three']
+
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         return super().form_valid(form)
     
 
      
-class PollDetail(DetailView):
-    model = Poll
-    success_url = '/polls/'
+def poll_detail(request, pk):
+    poll = get_object_or_404(Poll, pk=pk)
+    return render(request, 'polls/detail.html', {'poll': poll})
+    
+
 class PollUpdate(UpdateView):
     model = Poll
     fields = '__all__'

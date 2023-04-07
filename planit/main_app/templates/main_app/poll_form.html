@@ -4,14 +4,10 @@
 
 <h1>Add Poll</h1>
 
-<form action="" method="POST">
-
-{% csrf_token %}
-
-<label for="question">Enter Poll Question:</label>
-{{ form.as_table }}
-<input type="submit" value="Submit" class="btn">
-
-</form>
-
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create Poll">
+  </form>
+  <a href="{% url 'detail' events_id=events.id %}">Back to event detail</a>
 {% endblock %}
