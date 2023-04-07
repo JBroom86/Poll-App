@@ -150,20 +150,9 @@ def poll_form(request, event_id):
         form = PollForm()
     return render(request, 'poll_form.html', {'form': form, 'event': event})
 
-<<<<<<< HEAD
-
-# class PollCreate(CreateView):
-#     model = Poll
-#     fields = ['question', 'choice_one', 'choice_two', 'choice_three']
-
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super().form_valid(form)
-=======
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
->>>>>>> 75c32d20af0829195217b3123fdb7c4050dd2902
     
 # class PollUpdate(UpdateView):
 #     model = Poll
@@ -208,16 +197,4 @@ def vote(request, poll_id):
 
     return render(request, 'polls/vote.html', context)
 
-<<<<<<< HEAD
-     
-def poll_detail(request, pk):
-    poll = get_object_or_404(Poll, pk=pk)
-    return render(request, 'polls/detail.html', {'poll': poll})
-    
-
-class PollUpdate(UpdateView):
-    model = Poll
-    fields = '__all__'
-=======
->>>>>>> 75c32d20af0829195217b3123fdb7c4050dd2902
 
